@@ -38,5 +38,11 @@ int main(int argc, char **argv) {
     dimension(configuration.filenames[0]);
   }
   
+  
+
+  if (strncmp(configuration.command, "stat_report", 11) == 0) {
+    stat_report(configuration.filenames[0]);
+  }
+  
   return 0;
 }
