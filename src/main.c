@@ -10,6 +10,7 @@
 #include "argsparse.h"
 
 int main(int argc, char **argv) {
+
   /*To use debug mode: 
    - add --debug: freud.exe --debug -f images/input/image.jpeg
    or 
@@ -31,9 +32,11 @@ int main(int argc, char **argv) {
     /* helloworld() function is defined in feature.h and implemented in feature.c */
     helloWorld();
   }
-  /*
-   * TO COMPLETE
-   */
+
+
+  if ( strncmp(configuration.command, "dimension", 9) == 0 ) {
+    dimension(configuration.filenames[0]);
+  }
   
   return 0;
 }
