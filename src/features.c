@@ -58,11 +58,11 @@ void stat_report(char *source_path) {
 }
 
 int max_pixel(unsigned char *data, int total_pixels, int channels) {
-    return 0;
+    return 0; 
 }
 
 int min_pixel(unsigned char *data, int total_pixels, int channels) {
-    return 0;
+    return 0; 
 }
 
 int max_component(unsigned char *data, int total_pixels, int channels, int component) {
@@ -91,21 +91,10 @@ void min_component_with_position(char *source_path, char component) {
     unsigned char *data = NULL;
     int width = 0, height = 0, channels = 0;
 
-    if (!read_image_data(source_path, &data, &width, &height, &channels)) {
-        return;
-    }
+    if (!read_image_data(source_path, &data, &width, &height, &channels)) return;
 
-    int comp_index;
-    if (component == 'R') comp_index = 0;
-    else if (component == 'G') comp_index = 1;
-    else if (component == 'B') comp_index = 2;
-    else {
-        free(data);
-        return;
-    }
-
-    int min_val = 256;
-    int min_x = -1, min_y = -1;
+    int comp_index = (component == 'R') ? 0 : (component == 'G') ? 1 : 2;
+    int min_val = 256, min_x = -1, min_y = -1;
 
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
@@ -130,21 +119,10 @@ void max_component_with_position(char *source_path, char component) {
     unsigned char *data = NULL;
     int width = 0, height = 0, channels = 0;
 
-    if (!read_image_data(source_path, &data, &width, &height, &channels)) {
-        return;
-    }
+    if (!read_image_data(source_path, &data, &width, &height, &channels)) return;
 
-    int comp_index;
-    if (component == 'R') comp_index = 0;
-    else if (component == 'G') comp_index = 1;
-    else if (component == 'B') comp_index = 2;
-    else {
-        free(data);
-        return;
-    }
-
-    int max_val = -1;
-    int max_x = -1, max_y = -1;
+    int comp_index = (component == 'R') ? 0 : (component == 'G') ? 1 : 2;
+    int max_val = -1, max_x = -1, max_y = -1;
 
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
@@ -160,6 +138,78 @@ void max_component_with_position(char *source_path, char component) {
 
     if (max_x >= 0 && max_y >= 0) {
         printf("max_component %c (%d, %d): %d\n", component, max_x, max_y, max_val);
+    }
+
+    free(data);
+}
+
+void min_pixel_with_position(char *source_path) {
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+
+    if (!read_image_data(source_path, &data, &width, &height, &channels)) return;
+
+    int min_sum = 256 * 3 + 1;
+    int min_x = -1, min_y = -1;
+    int r_val = 0, g_val = 0, b_val = 0;
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            int index = (y * width + x) * channels;
+            int r = data[index];
+            int g = data[index + 1];
+            int b = data[index + 2];
+            int sum = r + g + b;
+
+            if (sum < min_sum) {
+                min_sum = sum;
+                min_x = x;
+                min_y = y;
+                r_val = r;
+                g_val = g;
+                b_val = b;
+            }
+        }
+    }
+
+    if (min_x >= 0 && min_y >= 0) {
+        printf("min_pixel (%d, %d): %d, %d, %d\n", min_x, min_y, r_val, g_val, b_val);
+    }
+
+    free(data);
+}
+
+void max_pixel_with_position(char *source_path) {
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+
+    if (!read_image_data(source_path, &data, &width, &height, &channels)) return;
+
+    int max_sum = -1;
+    int max_x = -1, max_y = -1;
+    int r_val = 0, g_val = 0, b_val = 0;
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            int index = (y * width + x) * channels;
+            int r = data[index];
+            int g = data[index + 1];
+            int b = data[index + 2];
+            int sum = r + g + b;
+
+            if (sum > max_sum) {
+                max_sum = sum;
+                max_x = x;
+                max_y = y;
+                r_val = r;
+                g_val = g;
+                b_val = b;
+            }
+        }
+    }
+
+    if (max_x >= 0 && max_y >= 0) {
+        printf("max_pixel (%d, %d): %d, %d, %d\n", max_x, max_y, r_val, g_val, b_val);
     }
 
     free(data);
