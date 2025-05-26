@@ -11,6 +11,8 @@
         "cwd": "${workspaceFolder}"
     },
     "files.associations": {
-        "unistd.h": "c"
+        "unistd.h": "c",
+        "stdio.h": "c",
+        "argsparse.h": "c"
     },
 }
