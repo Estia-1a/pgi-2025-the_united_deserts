@@ -43,13 +43,26 @@ void stat_report(char *source_path) {
    
 
     fprintf(f, "max_pixel: %d\n", maxPix);
-    fprintf(f, "min_pixel: %d\n\n", minPix);
+    fprintf(f, "min_pixel: %d\n", minPix);
     fprintf(f, "max_component R: %d\n", maxR);
     fprintf(f, "max_component G: %d\n", maxG);
-    fprintf(f, "max_component B: %d\n\n", maxB);
+    fprintf(f, "max_component B: %d\n", maxB);
     fprintf(f, "min_component R: %d\n", minR);
     fprintf(f, "min_component G: %d\n", minG);
     fprintf(f, "min_component B: %d\n", minB);
     fclose(f);
     free(data);
+}
+
+int max_pixel(unsigned char *data, int total_pixels, int channels) {
+    return 0;
+}
+int min_pixel(unsigned char *data, int total_pixels, int channels) {
+    return 0;
+}
+int max_component(unsigned char *data, int total_pixels, int channels, int component) {
+    return 0;
+}
+int min_component(unsigned char *data, int total_pixels, int channels, int component) {
+    return 0;
 }
