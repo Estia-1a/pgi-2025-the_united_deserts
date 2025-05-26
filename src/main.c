@@ -45,5 +45,13 @@ int main(int argc, char **argv) {
     max_component_with_position(configuration.filenames[0], component);
   }
 
+  if (strcmp(configuration.command, "min_pixel") == 0) {
+    min_pixel_with_position(configuration.filenames[0]);
+  }
+
+  if (strcmp(configuration.command, "max_pixel") == 0) {
+    max_pixel_with_position(configuration.filenames[0]);
+  }
+
   return 0;
 }
