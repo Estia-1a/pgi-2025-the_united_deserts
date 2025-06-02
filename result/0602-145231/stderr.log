@@ -1,0 +1,15 @@
+/usr/bin/ld: CMakeFiles/freud.dir/src/features.c.o: in function `stat_report':
+features.c:(.text+0xd9): undefined reference to `max_pixel'
+/usr/bin/ld: features.c:(.text+0xe7): undefined reference to `min_pixel'
+/usr/bin/ld: features.c:(.text+0xf7): undefined reference to `max_component'
+/usr/bin/ld: features.c:(.text+0x10a): undefined reference to `max_component'
+/usr/bin/ld: features.c:(.text+0x11d): undefined reference to `max_component'
+/usr/bin/ld: features.c:(.text+0x12c): undefined reference to `min_component'
+/usr/bin/ld: features.c:(.text+0x140): undefined reference to `min_component'
+/usr/bin/ld: features.c:(.text+0x154): undefined reference to `min_component'
+collect2: error: ld returned 1 exit status
+gmake[2]: *** [CMakeFiles/freud.dir/build.make:151: freud] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:87: CMakeFiles/freud.dir/all] Error 2
+gmake: *** [Makefile:136: all] Error 2
+
+The process '/usr/local/bin/cmake' failed with exit code 2
