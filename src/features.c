@@ -604,3 +604,34 @@ void mirror_vertical(char *source_path) {
     free(data);
     free(mirror_data);
 }
+
+void mirror_horizontal(char *source_path) {
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+
+    if (!read_image_data(source_path, &data, &width, &height, &channels)) return;
+
+    unsigned char *mirror_data = malloc(width * height * channels);
+    if (!mirror_data) {
+        free(data);
+        return;
+    }
+
+    // Symétrie horizontale : inverser les colonnes
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            int mirrored_x = width - 1 - x;
+            int src_index = (y * width + x) * channels;
+            int dst_index = (y * width + mirrored_x) * channels;
+
+            for (int c = 0; c < channels; c++) {
+                mirror_data[dst_index + c] = data[src_index + c];
+            }
+        }
+    }
+
+    write_image_data("image_out.bmp", mirror_data, width, height);
+
+    free(data);
+    free(mirror_data);
+}
