@@ -123,6 +123,28 @@ void second_line(char *source_path) {
     free(data);
 }
 
+void tenth_pixel(char *source_path) {
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+
+    if (!read_image_data(source_path, &data, &width, &height, &channels)) return;
+
+    if (width < 10 || channels < 3) {
+        printf("Image trop petite ou canaux insuffisants.\n");
+        free(data);
+        return;
+    }
+
+    int index = 9 * channels;  // 10ᵉ pixel, ligne 0
+    int r = data[index];
+    int g = data[index + 1];
+    int b = data[index + 2];
+
+    printf("tenth_pixel: %d, %d, %d\n", r, g, b);
+
+    free(data);
+}
+
 void min_component_with_position(char *source_path, char component) {
     unsigned char *data = NULL;
     int width = 0, height = 0, channels = 0;
