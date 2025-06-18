@@ -291,3 +291,42 @@ void color_desaturate(char *source_path) {
     free(data);
     free(new_data);
 }
+
+void color_gray_luminance(char *source_path) {
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+
+    if (!read_image_data(source_path, &data, &width, &height, &channels)) {
+        printf("Erreur de lecture de l'image.\n");
+        return;
+    }
+
+    unsigned char *gray_data = malloc(width * height * channels);
+    if (gray_data == NULL) {
+        printf("Erreur d'allocation mémoire.\n");
+        free(data);
+        return;
+    }
+
+    for (int i = 0; i < width * height; i++) {
+        int r = data[i * channels];
+        int g = data[i * channels + 1];
+        int b = data[i * channels + 2];
+
+        // Formule de luminance pondérée
+        unsigned char value = (unsigned char)(0.21 * r + 0.72 * g + 0.07 * b);
+
+        gray_data[i * channels] = value;
+        gray_data[i * channels + 1] = value;
+        gray_data[i * channels + 2] = value;
+
+        if (channels == 4) {
+            gray_data[i * channels + 3] = data[i * channels + 3]; // Conserver alpha
+        }
+    }
+
+    write_image_data("image_out.bmp", gray_data, width, height);
+
+    free(data);
+    free(gray_data);
+}
