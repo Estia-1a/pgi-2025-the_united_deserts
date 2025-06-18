@@ -32,4 +32,5 @@ void mirror_horizontal(char *source_path);
 void rotate_acw(char *source_path);
 void rotate_cw(char *source_path);
 void scale_crop(char *source_path, int center_x, int center_y, int crop_width, int crop_height);
+void scale_bilinear(char *source_path, float scale_factor);
 #endif

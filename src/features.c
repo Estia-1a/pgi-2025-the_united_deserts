@@ -740,3 +740,52 @@ void scale_crop(char *source_path, int center_x, int center_y, int crop_width, i
     free(src_data);
     free(crop_data);
 }
+ 
+void scale_bilinear(char *source_path, float scale_factor) {
+    unsigned char *src_data = NULL;
+    int src_width = 0, src_height = 0, channels = 0;
+ 
+    if (!read_image_data(source_path, &src_data, &src_width, &src_height, &channels)) return;
+ 
+    int new_width = (int)(src_width * scale_factor);
+    int new_height = (int)(src_height * scale_factor);
+ 
+    unsigned char *scaled_data = malloc(new_width * new_height * channels);
+    if (!scaled_data) {
+        free(src_data);
+        return;
+    }
+ 
+    for (int y = 0; y < new_height; y++) {
+        for (int x = 0; x < new_width; x++) {
+            float gx = x / scale_factor;
+            float gy = y / scale_factor;
+ 
+            int x0 = (int)gx;
+            int y0 = (int)gy;
+            int x1 = (x0 + 1 < src_width) ? x0 + 1 : x0;
+            int y1 = (y0 + 1 < src_height) ? y0 + 1 : y0;
+ 
+            float dx = gx - x0;
+            float dy = gy - y0;
+ 
+            for (int c = 0; c < channels; c++) {
+                float Q11 = src_data[(y0 * src_width + x0) * channels + c];
+                float Q21 = src_data[(y0 * src_width + x1) * channels + c];
+                float Q12 = src_data[(y1 * src_width + x0) * channels + c];
+                float Q22 = src_data[(y1 * src_width + x1) * channels + c];
+ 
+                float R1 = Q11 * (1 - dx) + Q21 * dx;
+                float R2 = Q12 * (1 - dx) + Q22 * dx;
+                float P = R1 * (1 - dy) + R2 * dy;
+ 
+                scaled_data[(y * new_width + x) * channels + c] = (unsigned char)P;
+            }
+        }
+    }
+ 
+    write_image_data("image_out.bmp", scaled_data, new_width, new_height);
+ 
+    free(src_data);
+    free(scaled_data);
+}
