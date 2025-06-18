@@ -401,3 +401,36 @@ void color_gray(char *source_path) {
     free(data);
     free(gray_data);
 }
+
+void color_blue(char *source_path) {
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+
+    if (!read_image_data(source_path, &data, &width, &height, &channels)) {
+        printf("Erreur de lecture de l'image.\n");
+        return;
+    }
+
+    unsigned char *blue_data = malloc(width * height * channels);
+    if (blue_data == NULL) {
+        printf("Erreur d'allocation mémoire.\n");
+        free(data);
+        return;
+    }
+
+    for (int i = 0; i < width * height; i++) {
+        blue_data[i * channels]     = 0; // R
+        blue_data[i * channels + 1] = 0; // G
+        blue_data[i * channels + 2] = data[i * channels + 2]; // B
+
+        if (channels == 4) {
+            blue_data[i * channels + 3] = data[i * channels + 3]; // Alpha
+        }
+    }
+
+    write_image_data("image_out.bmp", blue_data, width, height);
+
+    free(data);
+    free(blue_data);
+}
+
