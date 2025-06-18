@@ -101,6 +101,28 @@ void print_pixel(char *source_path, int x, int y) {
     free(data);
 }
 
+void second_line(char *source_path) {
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+
+    if (!read_image_data(source_path, &data, &width, &height, &channels)) return;
+
+    if (height < 2 || channels < 3) {
+        printf("Image trop petite ou canaux insuffisants.\n");
+        free(data);
+        return;
+    }
+
+    int index = width * channels;  // début de la 2e ligne (pixel 0,1)
+    int r = data[index];
+    int g = data[index + 1];
+    int b = data[index + 2];
+
+    printf("second_line: %d, %d, %d\n", r, g, b);
+
+    free(data);
+}
+
 void min_component_with_position(char *source_path, char component) {
     unsigned char *data = NULL;
     int width = 0, height = 0, channels = 0;

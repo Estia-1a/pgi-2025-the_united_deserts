@@ -11,6 +11,7 @@ int max_component(unsigned char *data, int total_pixels, int channels, int compo
 int min_component(unsigned char *data, int total_pixels, int channels, int component);
 
 void print_pixel(char *source_path, int x, int y);
+void second_line(char *source_path);
 void min_component_with_position(char *source_path, char component);
 void max_component_with_position(char *source_path, char component);
 void min_pixel_with_position(char *source_path);

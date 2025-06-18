@@ -65,5 +65,9 @@ int main(int argc, char **argv) {
     print_pixel(configuration.filenames[0], x, y);
 }
 
+if (strcmp(configuration.command, "second_line") == 0) {
+    second_line(configuration.filenames[0]);
+}
+
   return 0;
 }
