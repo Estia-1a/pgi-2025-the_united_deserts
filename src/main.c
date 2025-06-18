@@ -53,5 +53,17 @@ int main(int argc, char **argv) {
     max_pixel_with_position(configuration.filenames[0]);
   }
 
+  if (strcmp(configuration.command, "print_pixel") == 0) {
+    if (configuration.arguments[0] == NULL || configuration.arguments[1] == NULL) {
+        printf("Coordonnées x et y manquantes\n");
+        return 1;
+    }
+
+    int x = atoi(configuration.arguments[0]);
+    int y = atoi(configuration.arguments[1]);
+
+    print_pixel(configuration.filenames[0], x, y);
+}
+
   return 0;
 }

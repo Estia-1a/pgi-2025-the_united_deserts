@@ -87,6 +87,20 @@ int min_component(unsigned char *data, int total_pixels, int channels, int compo
     return min;
 }
 
+void print_pixel(char *source_path, int x, int y) {
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+
+    if (!read_image_data(source_path, &data, &width, &height, &channels)) return;
+
+    pixelRGB* pixel = get_pixel(data, width, height, channels, x, y);
+    if (pixel != NULL) {
+        printf("print_pixel (%d, %d): %d, %d, %d\n", x, y, pixel->R, pixel->G, pixel->B);
+    }
+
+    free(data);
+}
+
 void min_component_with_position(char *source_path, char component) {
     unsigned char *data = NULL;
     int width = 0, height = 0, channels = 0;
