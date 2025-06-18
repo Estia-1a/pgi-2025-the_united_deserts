@@ -150,6 +150,19 @@ int main(int argc, char **argv) {
     }
     scale_bilinear(configuration.filenames[0], scale);
     }
+
+    if (strcmp(configuration.command, "scale_nearest") == 0) {
+    if (configuration.arguments[0] == NULL) {
+        printf("Facteur d'échelle manquant (ex: 0.5 ou 2.0)\n");
+        return 1;
+    }
+    float scale = atof(configuration.arguments[0]);
+    if (scale <= 0) {
+        printf("Facteur d'échelle invalide\n");
+        return 1;
+    }
+    scale_nearest(configuration.filenames[0], scale);
+    }
  
     return 0;
 }

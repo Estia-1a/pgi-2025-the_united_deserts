@@ -789,3 +789,37 @@ void scale_bilinear(char *source_path, float scale_factor) {
     free(src_data);
     free(scaled_data);
 }
+
+void scale_nearest(char *source_path, float scale_factor) {
+    unsigned char *src_data = NULL;
+    int src_width = 0, src_height = 0, channels = 0;
+
+    if (!read_image_data(source_path, &src_data, &src_width, &src_height, &channels)) return;
+
+    int new_width = (int)(src_width * scale_factor);
+    int new_height = (int)(src_height * scale_factor);
+
+    unsigned char *scaled_data = malloc(new_width * new_height * channels);
+    if (!scaled_data) {
+        free(src_data);
+        return;
+    }
+
+    for (int y = 0; y < new_height; y++) {
+        for (int x = 0; x < new_width; x++) {
+            int src_x = (int)(x / scale_factor);
+            int src_y = (int)(y / scale_factor);
+            int src_index = (src_y * src_width + src_x) * channels;
+            int dst_index = (y * new_width + x) * channels;
+
+            for (int c = 0; c < channels; c++) {
+                scaled_data[dst_index + c] = src_data[src_index + c];
+            }
+        }
+    }
+
+    write_image_data("image_out.bmp", scaled_data, new_width, new_height);
+
+    free(src_data);
+    free(scaled_data);
+}
