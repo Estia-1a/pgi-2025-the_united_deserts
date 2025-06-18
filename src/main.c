@@ -103,6 +103,10 @@ int main(int argc, char **argv) {
     color_red(configuration.filenames[0]);
     }
 
+    if (strcmp(configuration.command, "mirror_total") == 0) {
+    mirror_total(configuration.filenames[0]);
+    }
+
     return 0;
 
 }
