@@ -250,3 +250,44 @@ void max_pixel_with_position(char *source_path) {
 
     free(data);
 }
+
+void color_desaturate(char *source_path) {
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+
+    if (!read_image_data(source_path, &data, &width, &height, &channels)) {
+        printf("Erreur de lecture de l'image.\n");
+        return;
+    }
+
+    // Création d'une nouvelle image
+    unsigned char *new_data = malloc(width * height * channels);
+    if (new_data == NULL) {
+        printf("Erreur d'allocation mémoire.\n");
+        free(data);
+        return;
+    }
+
+    for (int i = 0; i < width * height; i++) {
+        int r = data[i * channels];
+        int g = data[i * channels + 1];
+        int b = data[i * channels + 2];
+
+        int min_val = (r < g) ? ((r < b) ? r : b) : ((g < b) ? g : b);
+        int max_val = (r > g) ? ((r > b) ? r : b) : ((g > b) ? g : b);
+        int new_val = (min_val + max_val) / 2;
+
+        new_data[i * channels] = new_val;
+        new_data[i * channels + 1] = new_val;
+        new_data[i * channels + 2] = new_val;
+
+        if (channels == 4) {
+            new_data[i * channels + 3] = data[i * channels + 3]; // Alpha
+        }
+    }
+
+    write_image_data("image_out.bmp", new_data, width, height);
+
+    free(data);
+    free(new_data);
+}

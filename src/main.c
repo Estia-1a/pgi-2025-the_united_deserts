@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
   Config configuration;
   parse_arguments(argc, argv, &configuration);
   check_debug_mode(configuration);
-  check_file();
+  check_file();  // <= Si tu veux la rendre fonctionnelle, pense à lui passer le fichier
 
   if (strcmp(configuration.command, "helloworld") == 0) {
     helloWorld();
@@ -63,11 +63,15 @@ int main(int argc, char **argv) {
     int y = atoi(configuration.arguments[1]);
 
     print_pixel(configuration.filenames[0], x, y);
-}
+  }
 
-if (strcmp(configuration.command, "second_line") == 0) {
+  if (strcmp(configuration.command, "second_line") == 0) {
     second_line(configuration.filenames[0]);
-}
+  }
+
+  if (strcmp(configuration.command, "color_desaturate") == 0) {
+    color_desaturate(configuration.filenames[0]);
+  }
 
   return 0;
 }
