@@ -145,6 +145,27 @@ void tenth_pixel(char *source_path) {
     free(data);
 }
 
+void first_pixel(char *source_path) {
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+
+    if (!read_image_data(source_path, &data, &width, &height, &channels)) return;
+
+    if (channels < 3) {
+        printf("L'image n'a pas assez de canaux pour R, G, B.\n");
+        free(data);
+        return;
+    }
+
+    int r = data[0];
+    int g = data[1];
+    int b = data[2];
+
+    printf("first_pixel: %d, %d, %d\n", r, g, b);
+
+    free(data);
+}
+
 void min_component_with_position(char *source_path, char component) {
     unsigned char *data = NULL;
     int width = 0, height = 0, channels = 0;

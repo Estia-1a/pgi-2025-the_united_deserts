@@ -71,6 +71,10 @@ int main(int argc, char **argv) {
         tenth_pixel(configuration.filenames[0]);
     }
 
+    if (strcmp(configuration.command, "first_pixel") == 0) {
+        first_pixel(configuration.filenames[0]);
+    }
+
     if (strcmp(configuration.command, "color_desaturate") == 0) {
         color_desaturate(configuration.filenames[0]);
     }
