@@ -465,3 +465,37 @@ void color_green(char *source_path) {
     free(data);
     free(green_data);
 }
+
+
+void color_red(char *source_path) {
+    unsigned char *data = NULL;
+    int width = 0, height = 0, channels = 0;
+
+    if (!read_image_data(source_path, &data, &width, &height, &channels)) {
+        printf("Erreur de lecture de l'image.\n");
+        return;
+    }
+
+    unsigned char *red_data = malloc(width * height * channels);
+    if (red_data == NULL) {
+        printf("Erreur d'allocation mémoire.\n");
+        free(data);
+        return;
+    }
+
+    for (int i = 0; i < width * height; i++) {
+        int r = data[i * channels];         // R
+        red_data[i * channels] = r;         // R
+        red_data[i * channels + 1] = 0;     // G
+        red_data[i * channels + 2] = 0;     // B
+
+        if (channels == 4) {
+            red_data[i * channels + 3] = data[i * channels + 3]; // Alpha
+        }
+    }
+
+    write_image_data("image_out.bmp", red_data, width, height);
+
+    free(data);
+    free(red_data);
+}
