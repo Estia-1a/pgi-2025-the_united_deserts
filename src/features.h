@@ -22,4 +22,5 @@ void color_gray_luminance(char *source_path);
 void color_invert(char *source_path);
 void color_gray(char *source_path);
 void color_blue(char *source_path);
+void color_green(char *source_path);
 #endif
