@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
     Config configuration;
     parse_arguments(argc, argv, &configuration);
     check_debug_mode(configuration);
-    check_file();  // <= À adapter si tu veux valider le fichier
+    check_file(); 
  
     if (strcmp(configuration.command, "helloworld") == 0) {
         helloWorld();

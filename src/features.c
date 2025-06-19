@@ -113,7 +113,7 @@ void second_line(char *source_path) {
         return;
     }
  
-    int index = width * channels;  // début de la 2e ligne (pixel 0,1)
+    int index = width * channels;
     int r = data[index];
     int g = data[index + 1];
     int b = data[index + 2];
@@ -135,7 +135,7 @@ void tenth_pixel(char *source_path) {
         return;
     }
  
-    int index = 9 * channels;  // 10ᵉ pixel, ligne 0
+    int index = 9 * channels; 
     int r = data[index];
     int g = data[index + 1];
     int b = data[index + 2];
@@ -303,7 +303,7 @@ void color_desaturate(char *source_path) {
         return;
     }
  
-    // Création d'une nouvelle image
+
     unsigned char *new_data = malloc(width * height * channels);
     if (new_data == NULL) {
         printf("Erreur d'allocation mémoire.\n");
@@ -325,7 +325,7 @@ void color_desaturate(char *source_path) {
         new_data[i * channels + 2] = new_val;
  
         if (channels == 4) {
-            new_data[i * channels + 3] = data[i * channels + 3]; // Alpha
+            new_data[i * channels + 3] = data[i * channels + 3];
         }
     }
  
@@ -356,7 +356,7 @@ void color_gray_luminance(char *source_path) {
         int g = data[i * channels + 1];
         int b = data[i * channels + 2];
  
-        // Formule de luminance pondérée
+
         unsigned char value = (unsigned char)(0.21 * r + 0.72 * g + 0.07 * b);
  
         gray_data[i * channels] = value;
@@ -364,7 +364,7 @@ void color_gray_luminance(char *source_path) {
         gray_data[i * channels + 2] = value;
  
         if (channels == 4) {
-            gray_data[i * channels + 3] = data[i * channels + 3]; // Conserver alpha
+            gray_data[i * channels + 3] = data[i * channels + 3]; 
         }
     }
  
@@ -391,12 +391,12 @@ void color_invert(char *source_path) {
     }
  
     for (int i = 0; i < width * height; i++) {
-        inverted_data[i * channels]     = 255 - data[i * channels];     // R
-        inverted_data[i * channels + 1] = 255 - data[i * channels + 1]; // G
-        inverted_data[i * channels + 2] = 255 - data[i * channels + 2]; // B
+        inverted_data[i * channels]     = 255 - data[i * channels];     
+        inverted_data[i * channels + 1] = 255 - data[i * channels + 1]; 
+        inverted_data[i * channels + 2] = 255 - data[i * channels + 2]; 
  
         if (channels == 4) {
-            inverted_data[i * channels + 3] = data[i * channels + 3]; // conserver alpha
+            inverted_data[i * channels + 3] = data[i * channels + 3]; 
         }
     }
  
@@ -427,7 +427,7 @@ void color_gray(char *source_path) {
         int g = data[i * channels + 1];
         int b = data[i * channels + 2];
  
-        // Moyenne simple
+        
         unsigned char value = (r + g + b) / 3;
  
         gray_data[i * channels] = value;
@@ -435,7 +435,7 @@ void color_gray(char *source_path) {
         gray_data[i * channels + 2] = value;
  
         if (channels == 4) {
-            gray_data[i * channels + 3] = data[i * channels + 3]; // conserver alpha
+            gray_data[i * channels + 3] = data[i * channels + 3]; 
         }
     }
  
@@ -462,12 +462,12 @@ void color_blue(char *source_path) {
     }
  
     for (int i = 0; i < width * height; i++) {
-        blue_data[i * channels]     = 0; // R
-        blue_data[i * channels + 1] = 0; // G
-        blue_data[i * channels + 2] = data[i * channels + 2]; // B
+        blue_data[i * channels]     = 0; 
+        blue_data[i * channels + 1] = 0; 
+        blue_data[i * channels + 2] = data[i * channels + 2]; 
  
         if (channels == 4) {
-            blue_data[i * channels + 3] = data[i * channels + 3]; // Alpha
+            blue_data[i * channels + 3] = data[i * channels + 3]; 
         }
     }
  
@@ -494,12 +494,12 @@ void color_green(char *source_path) {
     }
  
     for (int i = 0; i < width * height; i++) {
-        green_data[i * channels]     = 0;                           // R
-        green_data[i * channels + 1] = data[i * channels + 1];     // G
-        green_data[i * channels + 2] = 0;                           // B
+        green_data[i * channels]     = 0;                          
+        green_data[i * channels + 1] = data[i * channels + 1];     
+        green_data[i * channels + 2] = 0;                          
  
         if (channels == 4) {
-            green_data[i * channels + 3] = data[i * channels + 3]; // Alpha
+            green_data[i * channels + 3] = data[i * channels + 3]; 
         }
     }
  
@@ -527,13 +527,13 @@ void color_red(char *source_path) {
     }
  
     for (int i = 0; i < width * height; i++) {
-        int r = data[i * channels];         // R
-        red_data[i * channels] = r;         // R
-        red_data[i * channels + 1] = 0;     // G
-        red_data[i * channels + 2] = 0;     // B
+        int r = data[i * channels];         
+        red_data[i * channels] = r;         
+        red_data[i * channels + 1] = 0;     
+        red_data[i * channels + 2] = 0;     
  
         if (channels == 4) {
-            red_data[i * channels + 3] = data[i * channels + 3]; // Alpha
+            red_data[i * channels + 3] = data[i * channels + 3]; 
         }
     }
  
@@ -555,7 +555,7 @@ void mirror_total(char *source_path) {
         return;
     }
  
-    // Boucle sur chaque pixel pour l’inverser totalement (symétrie verticale + horizontale)
+    
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             int src_index = (y * width + x) * channels;
@@ -586,7 +586,7 @@ void mirror_vertical(char *source_path) {
         return;
     }
  
-    // Symétrie verticale : inverser les lignes
+    
     for (int y = 0; y < height; y++) {
         int mirrored_y = height - 1 - y;
         for (int x = 0; x < width; x++) {
@@ -617,7 +617,7 @@ void mirror_horizontal(char *source_path) {
         return;
     }
  
-    // Symétrie horizontale : inverser les colonnes
+    
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             int mirrored_x = width - 1 - x;
@@ -729,7 +729,7 @@ void scale_crop(char *source_path, int center_x, int center_y, int crop_width, i
                     int src_index = (src_y * src_width + src_x) * channels;
                     crop_data[dst_index + c] = src_data[src_index + c];
                 } else {
-                    crop_data[dst_index + c] = 0;  // Pixel noir si en dehors
+                    crop_data[dst_index + c] = 0;  
                 }
             }
         }
